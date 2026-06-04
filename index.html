@@ -253,16 +253,29 @@
     .servicio-card.pool   .servicio-header { background: linear-gradient(135deg, #38BDF8 0%, #0369A1 100%); }
     .servicio-card.garden .servicio-header { background: linear-gradient(135deg, #4ADE80 0%, #166534 100%); }
     .servicio-card.obras  .servicio-header { background: linear-gradient(135deg, #FB923C 0%, #9A3412 100%); }
-    .servicio-icon { font-size: 3rem; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25)); position: relative; z-index: 1; }
-    .servicio-header h2 { font-size: 1.5rem; font-weight: 900; color: white; letter-spacing: -0.8px; position: relative; z-index: 1; }
+    .servicio-icon {
+      font-size: 3rem; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+      position: relative; z-index: 1; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .servicio-card:hover .servicio-icon { transform: scale(1.1) translateY(-8px); }
+    .servicio-header h2 {
+      font-size: 1.5rem; font-weight: 900; color: white; letter-spacing: -0.8px;
+      position: relative; z-index: 1; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .servicio-card:hover h2 { transform: translateY(-4px); }
     .servicio-header p  { font-size: 0.88rem; color: rgba(255,255,255,0.8); line-height: 1.6; position: relative; z-index: 1; }
     .servicio-body { background: var(--white); padding: 2rem 2.5rem 2.5rem; }
     .servicio-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
     .servicio-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.88rem; color: var(--gray); line-height: 1.5; }
-    .check { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+    .check {
+      width: 20px; height: 20px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 800;
+      flex-shrink: 0; margin-top: 2px; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
     .pool   .check { background: var(--blue-sub);   color: var(--blue-dark); }
     .garden .check { background: var(--green-sub);  color: var(--green-dark); }
     .obras  .check { background: var(--orange-sub); color: var(--orange-dark); }
+    .servicio-list li:hover .check { transform: scale(1.2); }
 
     /* ── PROCESO ── */
     #proceso { background: var(--white); }
@@ -305,9 +318,12 @@
     .porque-item:active {
       transform: translateX(4px); box-shadow: 0 6px 20px rgba(14,165,233,0.1);
     }
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    .porque-item .ico-box {
+      width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0; display: flex;
+      align-items: center; justify-content: center; font-size: 1.15rem;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .porque-item .ico-box { width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; }
+    .porque-item:hover .ico-box { transform: scale(1.15) rotate(-5deg); }
     .porque-item:nth-child(1) .ico-box { background: var(--blue-sub); }
     .porque-item:nth-child(2) .ico-box { background: var(--green-sub); }
     .porque-item:nth-child(3) .ico-box { background: var(--blue-sub); }
@@ -324,7 +340,13 @@
     .zona-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
     .zona-map { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 3rem; text-align: center; position: relative; overflow: hidden; }
     .zona-map::before { content: ''; position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(14,165,233,0.15) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); animation: blob-move 8s ease-in-out infinite alternate; }
-    .isla-icon { font-size: 8rem; display: block; margin-bottom: 1rem; filter: drop-shadow(0 8px 24px rgba(14,165,233,0.4)); position: relative; z-index: 1; }
+    .isla-icon {
+      font-size: 8rem; display: block; margin-bottom: 1rem;
+      filter: drop-shadow(0 8px 24px rgba(14,165,233,0.4));
+      position: relative; z-index: 1;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .zona-map:hover .isla-icon { transform: scale(1.1) rotate(-5deg); }
     .zona-map h3 { font-size: 1.4rem; font-weight: 800; color: white; margin-bottom: 0.5rem; position: relative; z-index: 1; }
     .zona-map p  { font-size: 0.88rem; color: rgba(255,255,255,0.55); position: relative; z-index: 1; }
     .zonas-list { display: flex; flex-direction: column; gap: 0.8rem; }
