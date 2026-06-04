@@ -236,9 +236,12 @@
       background: var(--white); border-radius: 16px; padding: 1.3rem 1.4rem;
       border: 1px solid rgba(14,165,233,0.12);
       box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-      transition: all 0.3s cubic-bezier(.16,1,.3,1);
     }
-    .porque-item:hover { border-color: var(--blue); transform: translateX(6px); box-shadow: 0 8px 30px rgba(14,165,233,0.12); }
+    .porque-item:hover {
+      border-color: var(--blue); transform: translateX(8px);
+      box-shadow: 0 12px 40px rgba(14,165,233,0.15);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
     .porque-item .ico-box { width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; }
     .porque-item:nth-child(1) .ico-box { background: var(--blue-sub); }
     .porque-item:nth-child(2) .ico-box { background: var(--green-sub); }
@@ -260,8 +263,16 @@
     .zona-map h3 { font-size: 1.4rem; font-weight: 800; color: white; margin-bottom: 0.5rem; position: relative; z-index: 1; }
     .zona-map p  { font-size: 0.88rem; color: rgba(255,255,255,0.55); position: relative; z-index: 1; }
     .zonas-list { display: flex; flex-direction: column; gap: 0.8rem; }
-    .zona-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem 1.3rem; display: flex; align-items: center; gap: 10px; transition: all 0.3s; }
-    .zona-item:hover { background: rgba(14,165,233,0.12); border-color: rgba(14,165,233,0.35); transform: translateX(4px); }
+    .zona-item {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 1rem 1.3rem; display: flex; align-items: center;
+      gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .zona-item:hover {
+      background: rgba(14,165,233,0.12); border-color: rgba(14,165,233,0.35);
+      transform: translateX(6px); box-shadow: 0 8px 20px rgba(14,165,233,0.15);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
     .zona-item span { font-size: 0.9rem; color: rgba(255,255,255,0.8); font-weight: 500; }
 
     /* ── ZONA COMING SOON ── */
@@ -340,8 +351,15 @@
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .fg { display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
     .fg label { font-size: 0.78rem; font-weight: 600; color: var(--gray); }
-    .fg input, .fg select, .fg textarea { padding: 0.72rem 1rem; border: 1.5px solid #E5E7EB; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.89rem; color: var(--black); background: var(--white); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
-    .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(14,165,233,0.12); }
+    .fg input, .fg select, .fg textarea {
+      padding: 0.72rem 1rem; border: 1.5px solid #E5E7EB; border-radius: 10px;
+      font-family: 'Inter', sans-serif; font-size: 0.89rem; color: var(--black);
+      background: var(--white); outline: none; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .fg input:focus, .fg select:focus, .fg textarea:focus {
+      border-color: var(--blue); box-shadow: 0 0 0 4px rgba(14,165,233,0.15);
+      transition: border-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
     .fg textarea { resize: vertical; min-height: 90px; }
     .service-toggle { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7rem; margin-bottom: 1rem; }
     .toggle-opt { border: 2px solid #E5E7EB; border-radius: 10px; padding: 0.8rem; display: flex; align-items: center; gap: 7px; cursor: pointer; font-size: 0.84rem; font-weight: 600; color: var(--gray); transition: all 0.2s; background: var(--white); }
@@ -359,8 +377,18 @@
     #contacto-rapido h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: white; letter-spacing: -1.5px; margin-bottom: 0.8rem; position: relative; }
     #contacto-rapido p  { font-size: 1.05rem; color: rgba(255,255,255,0.7); margin-bottom: 2.5rem; position: relative; }
     .contact-pills { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
-    .contact-pill { background: rgba(255,255,255,0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 0.8rem 1.8rem; color: white; text-decoration: none; font-size: 0.93rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s; }
-    .contact-pill:hover { background: rgba(255,255,255,0.2); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+    .contact-pill {
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 100px;
+      padding: 0.8rem 1.8rem; color: white; text-decoration: none;
+      font-size: 0.93rem; font-weight: 600; display: inline-flex;
+      align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .contact-pill:hover {
+      background: rgba(255,255,255,0.2); transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
     .contact-pill.solid { background: white; color: var(--blue-dark); border-color: white; }
     .contact-pill.solid:hover { background: #E0F2FE; }
 
