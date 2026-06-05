@@ -1267,22 +1267,39 @@ function setLang(lang) {
   localStorage.setItem('lang', lang);
   ['es','en','de'].forEach(l => document.getElementById('btn-'+l).classList.toggle('active', l===lang));
 
-  // Fade out + change + fade in
+  // Smooth fade + scale transition for all text
   const i18nEls = document.querySelectorAll('[data-i18n]');
   const i18nPhEls = document.querySelectorAll('[data-i18n-ph]');
 
-  i18nEls.forEach(el => el.style.transition = 'opacity 0.3s ease-out');
-  i18nPhEls.forEach(el => el.style.transition = 'opacity 0.3s ease-out');
+  // Set transition for smooth effect
+  i18nEls.forEach(el => el.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)');
+  i18nPhEls.forEach(el => el.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)');
 
-  i18nEls.forEach(el => el.style.opacity = '0');
+  // Fade out + scale down
+  i18nEls.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'scale(0.95)';
+  });
   i18nPhEls.forEach(el => el.style.opacity = '0');
 
+  // Change content and fade in + scale up
   setTimeout(() => {
-    i18nEls.forEach(el => { const v = T[lang][el.dataset.i18n]; if(v!==undefined) el.innerHTML=v; });
-    i18nPhEls.forEach(el => { const v = T[lang][el.dataset.i18nPh]; if(v!==undefined) el.placeholder=v; });
-    i18nEls.forEach(el => el.style.opacity = '1');
+    i18nEls.forEach(el => {
+      const v = T[lang][el.dataset.i18n];
+      if(v!==undefined) el.innerHTML=v;
+    });
+    i18nPhEls.forEach(el => {
+      const v = T[lang][el.dataset.i18nPh];
+      if(v!==undefined) el.placeholder=v;
+    });
+
+    // Fade in + scale back
+    i18nEls.forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'scale(1)';
+    });
     i18nPhEls.forEach(el => el.style.opacity = '1');
-  }, 150);
+  }, 200);
 
   const titles = { es:'PersonaPlan International — Piscinas y Jardines en Tenerife', en:'PersonaPlan International — Pools & Gardens in Tenerife', de:'PersonaPlan International — Pools & Gärten auf Teneriffa' };
   document.title = titles[lang];
