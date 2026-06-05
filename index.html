@@ -850,13 +850,13 @@
 <!-- SERVICIOS -->
 <section id="servicios">
   <div style="text-align:center;max-width:600px;margin:0 auto 0;" class="anim-up">
-    <div class="section-label sl-blue" data-i18n="serv-label">Nuestros servicios</div>
-    <h2 class="section-title" data-i18n="serv-title">Piscinas y jardines.<br/>Todo bajo control.</h2>
+    <div class="section-label sl-blue" data-i18n-fade data-i18n="serv-label">Nuestros servicios</div>
+    <h2 class="section-title" data-i18n-fade data-i18n="serv-title">Piscinas y jardines.<br/>Todo bajo control.</h2>
     <p class="section-desc" style="margin:0 auto;" data-i18n="serv-desc">Ofrecemos un servicio integral para que no tengas que preocuparte por nada. Nosotros nos encargamos de todo.</p>
   </div>
   <div class="servicios-grid">
     <div class="servicio-card pool anim-up d1">
-      <div class="servicio-header"><div class="servicio-icon">🏊‍♂️</div><h2 data-i18n="pool-title">Mantenimiento de Piscinas</h2><p data-i18n="pool-desc">Agua limpia, equilibrada y segura durante todo el año.</p></div>
+      <div class="servicio-header"><div class="servicio-icon">🏊‍♂️</div><h2 data-i18n-fade data-i18n="pool-title">Mantenimiento de Piscinas</h2><p data-i18n="pool-desc">Agua limpia, equilibrada y segura durante todo el año.</p></div>
       <div class="servicio-body"><ul class="servicio-list">
         <li><span class="check">✓</span><span data-i18n="pool-1">Análisis y control de pH, cloro y alcalinidad</span></li>
         <li><span class="check">✓</span><span data-i18n="pool-2">Limpieza de fondo, paredes y línea de flotación</span></li>
@@ -869,7 +869,7 @@
       </ul></div>
     </div>
     <div class="servicio-card garden anim-up d2">
-      <div class="servicio-header"><div class="servicio-icon">🌿</div><h2 data-i18n="garden-title">Jardinería y Zonas Verdes</h2><p data-i18n="garden-desc">Tu jardín siempre impecable y lleno de vida.</p></div>
+      <div class="servicio-header"><div class="servicio-icon">🌿</div><h2 data-i18n-fade data-i18n="garden-title">Jardinería y Zonas Verdes</h2><p data-i18n="garden-desc">Tu jardín siempre impecable y lleno de vida.</p></div>
       <div class="servicio-body"><ul class="servicio-list">
         <li><span class="check">✓</span><span data-i18n="garden-1">Poda y recorte de setos, arbustos y árboles</span></li>
         <li><span class="check">✓</span><span data-i18n="garden-2">Siega y mantenimiento de césped</span></li>
@@ -900,7 +900,7 @@
     </div>
     <div class="servicios-grid" style="margin-top:3.5rem;grid-template-columns:1fr;">
       <div class="servicio-card obras anim-up d1">
-        <div class="servicio-header"><div class="servicio-icon">🔨</div><h2 data-i18n="obras-title">Pequeñas Obras e Instalaciones</h2><p data-i18n="obras-desc">Reformas menores y reparaciones en tu vivienda.</p></div>
+        <div class="servicio-header"><div class="servicio-icon">🔨</div><h2 data-i18n-fade data-i18n="obras-title">Pequeñas Obras e Instalaciones</h2><p data-i18n="obras-desc">Reformas menores y reparaciones en tu vivienda.</p></div>
         <div class="servicio-body"><ul class="servicio-list">
           <li><span class="check">✓</span><span data-i18n="obras-1">Pintura interior y exterior</span></li>
           <li><span class="check">✓</span><span data-i18n="obras-2">Alicatado y pequeñas reformas de baño</span></li>
@@ -927,8 +927,8 @@
 <section id="proceso">
   <div class="proceso-layout">
     <div>
-      <div class="section-label sl-blue" data-i18n="proc-label">Cómo trabajamos</div>
-      <h2 class="section-title" data-i18n="proc-title">Simple, puntual<br/>y sin complicaciones</h2>
+      <div class="section-label sl-blue" data-i18n-fade data-i18n="proc-label">Cómo trabajamos</div>
+      <h2 class="section-title" data-i18n-fade data-i18n="proc-title">Simple, puntual<br/>y sin complicaciones</h2>
       <p class="section-desc" style="margin-bottom:0;" data-i18n="proc-desc">Nuestro proceso está diseñado para que no tengas que estar pendiente de nada. Tú disfrutas, nosotros nos encargamos.</p>
       <div class="steps">
         <div class="step anim-up d1"><div class="step-num">1</div><div class="step-body"><h3 data-i18n="step1-h">Presupuesto gratuito</h3><p data-i18n="step1-p">Visitamos tu propiedad sin coste y te entregamos un presupuesto claro y detallado.</p></div></div>
@@ -1267,16 +1267,17 @@ function setLang(lang) {
   localStorage.setItem('lang', lang);
   ['es','en','de'].forEach(l => document.getElementById('btn-'+l).classList.toggle('active', l===lang));
 
-  // Smooth fade + scale transition for all text
+  // Smooth fade + scale transition ONLY for titles and labels
+  const fadeEls = document.querySelectorAll('[data-i18n-fade]');
   const i18nEls = document.querySelectorAll('[data-i18n]');
   const i18nPhEls = document.querySelectorAll('[data-i18n-ph]');
 
-  // Set transition for smooth effect
-  i18nEls.forEach(el => el.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)');
+  // Set transition for smooth effect on fade elements only
+  fadeEls.forEach(el => el.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)');
   i18nPhEls.forEach(el => el.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)');
 
-  // Fade out + scale down
-  i18nEls.forEach(el => {
+  // Fade out + scale down ONLY for titles
+  fadeEls.forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'scale(0.95)';
   });
@@ -1293,8 +1294,8 @@ function setLang(lang) {
       if(v!==undefined) el.placeholder=v;
     });
 
-    // Fade in + scale back
-    i18nEls.forEach(el => {
+    // Fade in + scale back ONLY for titles
+    fadeEls.forEach(el => {
       el.style.opacity = '1';
       el.style.transform = 'scale(1)';
     });
