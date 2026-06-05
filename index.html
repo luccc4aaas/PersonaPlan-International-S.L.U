@@ -81,12 +81,22 @@
     .nav-links a:hover::after { width: 100%; }
     .nav-cta { background: var(--blue); color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 8px; font-weight: 600 !important; transition: all 0.2s !important; }
     .nav-cta:hover { background: var(--blue-dark) !important; transform: translateY(-1px); }
-    .lang-switcher { display: flex; align-items: center; gap: 4px; background: var(--gray-pale); border-radius: 10px; padding: 4px; border: 1px solid rgba(0,0,0,0.07); }
+    .lang-switcher {
+      display: flex; align-items: center; gap: 4px; background: var(--gray-pale);
+      border-radius: 10px; padding: 4px; border: 1px solid rgba(0,0,0,0.07);
+      position: relative; overflow: visible; --glass-offset: 4px;
+    }
+    .lang-switcher::after {
+      content: ''; position: absolute; bottom: -8px; height: 3px;
+      background: linear-gradient(90deg, transparent 0%, rgba(14,165,233,0.6) 50%, transparent 100%);
+      border-radius: 2px; transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      width: 35px; left: var(--glass-offset);
+    }
     .lang-btn {
       background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif;
       font-size: 0.75rem; font-weight: 700; color: var(--gray-mid); padding: 5px 9px;
       border-radius: 7px; transition: all 0.4s ease-out;
-      display: flex; align-items: center; gap: 4px; position: relative; overflow: hidden;
+      display: flex; align-items: center; gap: 4px; position: relative; overflow: visible;
     }
     .lang-btn::before {
       content: ''; position: absolute; inset: 0;
@@ -102,6 +112,10 @@
       background: var(--white); color: var(--black); box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     }
     .lang-btn.active::before { transform: translateX(100%); }
+
+    #btn-es.active ~ .lang-switcher-glass { transform: translateX(0); }
+    #btn-en.active ~ .lang-switcher-glass { transform: translateX(43px); }
+    #btn-de.active ~ .lang-switcher-glass { transform: translateX(86px); }
 
     /* ── ANIMATIONS (IntersectionObserver based — no conflicts) ── */
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
@@ -1248,6 +1262,15 @@ function setLang(lang) {
   document.documentElement.lang = lang;
   localStorage.setItem('lang', lang);
   ['es','en','de'].forEach(l => document.getElementById('btn-'+l).classList.toggle('active', l===lang));
+
+  // Move liquid glass effect
+  const glass = document.querySelector('.lang-switcher::after');
+  const btnOffsets = { es: 4, en: 43, de: 82 };
+  if (glass) {
+    setTimeout(() => {
+      document.querySelector('.lang-switcher').style.setProperty('--glass-offset', btnOffsets[lang] + 'px');
+    }, 0);
+  }
 
   // Fade out + change + fade in
   const i18nEls = document.querySelectorAll('[data-i18n]');
