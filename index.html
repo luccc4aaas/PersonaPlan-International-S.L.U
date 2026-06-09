@@ -324,7 +324,7 @@
 
     /* ── SERVICIOS ── */
     #servicios { background: var(--gray-pale); }
-    .servicios-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem; margin-top: 4rem; }
+    .servicios-grid { display: grid; grid-template-columns: 7fr 3fr; gap: 2rem; margin-top: 4rem; align-items: start; }
     .gallery-fotos { margin-top: 2.5rem; }
     .gallery-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2rem; }
     .foto-mini {
@@ -707,7 +707,7 @@
     .mobile-menu .m-cta:hover { background: var(--blue-dark) !important; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 1100px) { .servicios-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 1100px) { .servicios-grid { grid-template-columns: 7fr 3fr; } }
 
     @media (max-width: 960px) {
       .hamburger { display: flex; }
