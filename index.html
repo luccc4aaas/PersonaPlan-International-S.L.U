@@ -1009,7 +1009,7 @@
         <span data-i18n="hero-btn1">Pedir presupuesto gratis</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-      <a href="https://wa.me/34682648783?text=Hola%2C%20quiero%20solicitar%20un%20presupuesto%20para%20servicios%20de%20mantenimiento%20de%20piscinas%20y%20jardines." class="btn-outline" target="_blank" rel="noopener">📞 +34 682 64 87 83</a>
+      <a data-wa href="https://wa.me/34682648783?text=Hola%2C%20quiero%20solicitar%20un%20presupuesto%20para%20servicios%20de%20mantenimiento%20de%20piscinas%20y%20jardines." class="btn-outline" target="_blank" rel="noopener">📞 +34 682 64 87 83</a>
     </div>
   </div>
 
@@ -1200,7 +1200,7 @@
       </div>
       <div style="margin-top:2.5rem;" class="anim-up d6">
         <p style="font-size:0.85rem;color:var(--gray-mid);margin-bottom:0.5rem;" data-i18n="pres-call">¿Prefieres llamar directamente?</p>
-        <a href="https://wa.me/34682648783?text=Hola%2C%20quiero%20solicitar%20un%20presupuesto%20para%20servicios%20de%20mantenimiento%20de%20piscinas%20y%20jardines." target="_blank" rel="noopener" style="font-size:1.2rem;font-weight:800;color:var(--blue);text-decoration:none;letter-spacing:-0.5px;">📞 +34 682 64 87 83</a><br/>
+        <a data-wa href="https://wa.me/34682648783?text=Hola%2C%20quiero%20solicitar%20un%20presupuesto%20para%20servicios%20de%20mantenimiento%20de%20piscinas%20y%20jardines." target="_blank" rel="noopener" style="font-size:1.2rem;font-weight:800;color:var(--blue);text-decoration:none;letter-spacing:-0.5px;">📞 +34 682 64 87 83</a><br/>
         <a href="mailto:info@personaplan-international.es" style="font-size:0.9rem;color:var(--gray);text-decoration:none;margin-top:4px;display:block;">✉️ info@personaplan-international.es</a>
       </div>
     </div>
@@ -1258,8 +1258,8 @@
   <h2 class="anim-up" data-i18n="cta-h2">¿Hablamos hoy mismo?</h2>
   <p class="anim-up d1" data-i18n="cta-p">Primera visita y presupuesto completamente gratuitos. Sin compromiso.</p>
   <div class="contact-pills anim-up d2">
-    <a href="https://wa.me/34682648783?text=Hola%2C%20quiero%20solicitar%20un%20presupuesto%20para%20servicios%20de%20mantenimiento%20de%20piscinas%20y%20jardines." class="contact-pill solid" target="_blank" rel="noopener">📞 +34 682 64 87 83</a>
-    <a href="https://wa.me/34682648783?text=Hola%2C%20quiero%20solicitar%20un%20presupuesto%20para%20servicios%20de%20mantenimiento%20de%20piscinas%20y%20jardines." class="contact-pill" style="background:rgba(37,211,102,0.9);border-color:#25D366;color:white;" target="_blank" rel="noopener">💬 WhatsApp</a>
+    <a data-wa href="https://wa.me/34682648783?text=Hola%2C%20quiero%20solicitar%20un%20presupuesto%20para%20servicios%20de%20mantenimiento%20de%20piscinas%20y%20jardines." class="contact-pill solid" target="_blank" rel="noopener">📞 +34 682 64 87 83</a>
+    <a data-wa href="https://wa.me/34682648783?text=Hola%2C%20quiero%20solicitar%20un%20presupuesto%20para%20servicios%20de%20mantenimiento%20de%20piscinas%20y%20jardines." class="contact-pill" style="background:rgba(37,211,102,0.9);border-color:#25D366;color:white;" target="_blank" rel="noopener">💬 WhatsApp</a>
     <a href="mailto:info@personaplan-international.es" class="contact-pill">✉️ info@personaplan-international.es</a>
     <a href="#presupuesto" class="contact-pill"><span data-i18n="cta-pill">Pedir presupuesto online</span></a>
   </div>
@@ -1604,6 +1604,15 @@ function setLang(lang) {
 
   const titles = { es:'PersonaPlan International — Piscinas y Jardines en Tenerife', en:'PersonaPlan International — Pools & Gardens in Tenerife', de:'PersonaPlan International — Pools & Gärten auf Teneriffa' };
   document.title = titles[lang];
+
+  // WhatsApp message in the selected language
+  const waMessages = {
+    es: 'Hola, quiero solicitar un presupuesto para servicios de mantenimiento de piscinas y jardines.',
+    en: "Hello, I'd like to request a quote for pool and garden maintenance services.",
+    de: 'Hallo, ich möchte ein Angebot für Pool- und Gartenpflege anfordern.'
+  };
+  const waHref = 'https://wa.me/34682648783?text=' + encodeURIComponent(waMessages[lang] || waMessages.es);
+  document.querySelectorAll('[data-wa]').forEach(el => el.href = waHref);
 }
 setLang(currentLang);
 
