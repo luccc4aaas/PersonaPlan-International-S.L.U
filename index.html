@@ -324,7 +324,7 @@
 
     /* ── SERVICIOS ── */
     #servicios { background: var(--gray-pale); }
-    .servicios-grid { display: grid; grid-template-columns: 7fr 3fr; gap: 2rem; margin-top: 4rem; align-items: start; }
+    .servicios-grid { display: grid; grid-template-columns: 7fr 3fr; gap: 2rem; margin-top: 4rem; align-items: stretch; }
     .gallery-fotos { margin-top: 2.5rem; }
     .gallery-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2rem; }
     .foto-mini {
@@ -338,6 +338,7 @@
       border-radius: 24px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);
       cursor: default; box-shadow: 0 4px 20px rgba(0,0,0,0.06);
       transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex; flex-direction: column;
     }
     .servicio-card:hover {
       transform: translateY(-12px); box-shadow: 0 40px 100px rgba(0,0,0,0.15);
@@ -360,8 +361,8 @@
     }
     .servicio-card:hover h2 { transform: translateY(-4px); }
     .servicio-header p  { font-size: 0.88rem; color: rgba(255,255,255,0.8); line-height: 1.6; position: relative; z-index: 1; }
-    .servicio-body { background: var(--white); padding: 2rem 2.5rem 2.5rem; }
-    .servicio-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+    .servicio-body { background: var(--white); padding: 2rem 2.5rem 2.5rem; flex: 1; display: flex; flex-direction: column; }
+    .servicio-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; justify-content: center; flex: 1; }
     .servicio-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.88rem; color: var(--gray); line-height: 1.5; }
     .check {
       width: 20px; height: 20px; border-radius: 50%; display: flex;
