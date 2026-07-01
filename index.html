@@ -326,14 +326,30 @@
     #servicios { background: var(--gray-pale); }
     .servicios-grid { display: grid; grid-template-columns: 7fr 3fr; gap: 2rem; margin-top: 4rem; align-items: stretch; }
     .gallery-fotos { margin-top: 2.5rem; }
-    .gallery-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2rem; }
+    .gallery-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
     .foto-mini {
-      width: 100%; height: 180px; object-fit: cover; border-radius: 16px;
+      flex: 0 1 calc(20% - 0.96rem); width: auto; height: 180px; object-fit: cover; object-position: center; border-radius: 16px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.12); cursor: pointer;
       transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .foto-mini:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
     .foto-mini:active { transform: translateY(-2px) scale(1); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
+    /* LIGHTBOX (foto completa al hacer click) */
+    .lightbox { position: fixed; inset: 0; z-index: 1300; display: flex; align-items: center; justify-content: center; padding: 22px; background: rgba(8,12,18,0.92); backdrop-filter: blur(6px); opacity: 0; visibility: hidden; transition: opacity 0.35s, visibility 0.35s; }
+    .lightbox.open { opacity: 1; visibility: visible; }
+    .lb-figure { position: relative; margin: 0; max-width: 1100px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .lb-figure img { max-width: 100%; max-height: 82vh; object-fit: contain; border-radius: 14px; box-shadow: 0 30px 80px rgba(0,0,0,0.55); background: #0a0f14; }
+    .lb-cap { margin-top: 14px; color: #fff; font-size: 0.95rem; opacity: 0.85; text-align: center; max-width: 640px; }
+    .lb-anim { animation: lbIn 0.42s cubic-bezier(0.2,0.7,0.2,1); }
+    @keyframes lbIn { from { opacity: 0; transform: translateX(var(--lbdir, 34px)); } to { opacity: 1; transform: none; } }
+    .lb-close { position: fixed; top: 20px; right: 22px; z-index: 3; width: 46px; height: 46px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.92); color: #000; font-size: 1.7rem; line-height: 1; cursor: pointer; transition: transform 0.25s, background 0.25s; }
+    .lb-close:hover { background: #fff; transform: rotate(90deg); }
+    .lb-nav { position: fixed; top: 50%; transform: translateY(-50%); z-index: 3; width: 52px; height: 52px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.9); color: #000; font-size: 1.9rem; line-height: 1; cursor: pointer; transition: transform 0.25s, background 0.25s; display: flex; align-items: center; justify-content: center; }
+    .lb-nav:hover { background: #fff; transform: translateY(-50%) scale(1.08); }
+    .lb-nav:active { transform: translateY(-50%) scale(0.94); }
+    .lb-prev { left: 18px; } .lb-next { right: 18px; }
+    .lb-count { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); color: #fff; opacity: 0.7; font-size: 0.85rem; letter-spacing: 0.05em; }
+    @media (max-width: 600px) { .lb-nav { width: 44px; height: 44px; font-size: 1.6rem; } .lb-prev { left: 8px; } .lb-next { right: 8px; } .lb-close { top: 12px; right: 12px; } .lb-figure img { max-height: 74vh; } }
     .servicio-card {
       border-radius: 24px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);
       cursor: default; box-shadow: 0 4px 20px rgba(0,0,0,0.06);
@@ -739,8 +755,8 @@
       .servicios-grid { grid-template-columns: 1fr; gap: 1.2rem; margin-top: 2.5rem; }
       .servicio-card { transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
       .servicio-card:active { transform: scale(0.97); }
-      .gallery-row { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-      .foto-mini { height: 140px; transition: transform 0.3s ease-out; }
+      .gallery-row { gap: 1rem; }
+      .foto-mini { flex-basis: calc(33.333% - 0.667rem); height: 140px; transition: transform 0.3s ease-out; }
       .foto-mini:active { transform: scale(0.97); }
 
       .proceso-layout { grid-template-columns: 1fr; gap: 3rem; }
@@ -1081,6 +1097,14 @@
       <img src="assets/piscina-3.jpg" alt="Piscina en Tenerife" class="foto-mini" loading="lazy" />
       <img src="assets/jardin-1.jpg" alt="Jardin mantenido" class="foto-mini" loading="lazy" />
       <img src="assets/jardin-2.jpg" alt="Zonas verdes" class="foto-mini" loading="lazy" />
+      <img src="assets/riego-1.jpg" alt="Instalación de sistema de riego en Tenerife" class="foto-mini" loading="lazy" />
+      <img src="assets/riego-2.jpg" alt="Conexión de riego" class="foto-mini" loading="lazy" />
+      <img src="assets/riego-3.jpg" alt="Tubería de riego instalada" class="foto-mini" loading="lazy" />
+      <img src="assets/riego-4.jpg" alt="Riego por goteo en jardín" class="foto-mini" loading="lazy" />
+      <img src="assets/riego-5.jpg" alt="Instalación de tuberías de riego" class="foto-mini" loading="lazy" />
+      <img src="assets/riego-6.jpg" alt="Depósitos de agua para riego" class="foto-mini" loading="lazy" />
+      <img src="assets/riego-7.jpg" alt="Sistema de riego con depósito" class="foto-mini" loading="lazy" />
+      <img src="assets/riego-8.jpg" alt="Depósito de riego instalado" class="foto-mini" loading="lazy" />
     </div>
   </div>
 
@@ -1110,6 +1134,10 @@
         <img src="assets/instalacion-1.jpg" alt="Instalación" class="foto-mini" loading="lazy" />
         <img src="assets/instalacion-2.jpg" alt="Reforma" class="foto-mini" loading="lazy" />
         <img src="assets/instalacion-3.jpg" alt="Obra" class="foto-mini" loading="lazy" />
+        <img src="assets/obra-1.jpg" alt="Instalación de ducha solar" class="foto-mini" loading="lazy" />
+        <img src="assets/obra-2.jpg" alt="Instalación de agua y riego automático" class="foto-mini" loading="lazy" />
+        <img src="assets/obra-3.jpg" alt="Pequeña obra: instalación exterior" class="foto-mini" loading="lazy" />
+        <img src="assets/obra-4.jpg" alt="Instalación de fontanería" class="foto-mini" loading="lazy" />
       </div>
     </div>
   </div>
@@ -1739,6 +1767,62 @@ document.getElementById('quote-form').addEventListener('submit', async function(
     btn.disabled=false; btn.style.opacity='1'; arrow.style.display='block'; spin.style.display='none';
   }
 });
+</script>
+
+<!-- LIGHTBOX GALERÍA -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <button class="lb-close" id="lbClose" aria-label="Cerrar">&times;</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Anterior">&#8249;</button>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Siguiente">&#8250;</button>
+  <figure class="lb-figure">
+    <img id="lbImg" src="" alt="" />
+    <figcaption class="lb-cap" id="lbCap"></figcaption>
+  </figure>
+  <div class="lb-count" id="lbCount"></div>
+</div>
+<script>
+(function(){
+  var lb = document.getElementById('lightbox');
+  if(!lb) return;
+  var lbImg = document.getElementById('lbImg'), lbCap = document.getElementById('lbCap'),
+      lbCount = document.getElementById('lbCount'), group = [], cur = 0;
+  function show(i, dir){
+    dir = dir || 1;
+    cur = (i + group.length) % group.length;
+    var im = group[cur];
+    lbImg.src = im.getAttribute('src');
+    lbImg.alt = im.getAttribute('alt') || '';
+    lbCap.textContent = im.getAttribute('alt') || '';
+    lbCount.textContent = (cur + 1) + ' / ' + group.length;
+    lbImg.style.setProperty('--lbdir', dir >= 0 ? '34px' : '-34px');
+    lbImg.classList.remove('lb-anim'); void lbImg.offsetWidth; lbImg.classList.add('lb-anim');
+  }
+  function open(img){
+    var row = img.closest('.gallery-row') || img.closest('.gallery-fotos');
+    group = Array.prototype.slice.call(row.querySelectorAll('.foto-mini'));
+    show(group.indexOf(img), 1);
+    lb.classList.add('open'); lb.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){
+    lb.classList.remove('open'); lb.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.gallery-fotos .foto-mini').forEach(function(im){
+    im.style.cursor = 'zoom-in';
+    im.addEventListener('click', function(){ open(im); });
+  });
+  document.getElementById('lbClose').addEventListener('click', close);
+  document.getElementById('lbPrev').addEventListener('click', function(e){ e.stopPropagation(); show(cur - 1, -1); });
+  document.getElementById('lbNext').addEventListener('click', function(e){ e.stopPropagation(); show(cur + 1, 1); });
+  lb.addEventListener('click', function(e){ if(e.target === lb || e.target.classList.contains('lb-figure')) close(); });
+  document.addEventListener('keydown', function(e){
+    if(!lb.classList.contains('open')) return;
+    if(e.key === 'Escape') close();
+    else if(e.key === 'ArrowLeft') show(cur - 1, -1);
+    else if(e.key === 'ArrowRight') show(cur + 1, 1);
+  });
+})();
 </script>
 </body>
 </html>
