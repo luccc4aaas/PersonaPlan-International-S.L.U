@@ -1,0 +1,44 @@
+# Mantiene despierto el proyecto de Supabase del CRM de Truvik
+# (el plan gratis se pausa tras 7 días sin actividad en la base de datos).
+# Vive en este repo solo porque ya tiene Actions funcionando; no toca la web
+# de PersonaPlan: los commits del ping van a la rama "keepalive", nunca a main.
+name: Supabase keep-alive (CRM Truvik)
+
+on:
+  schedule:
+    - cron: '12 9 * * 1,4' # lunes y jueves, 09:12 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping a la base de datos del CRM (cuenta como actividad)
+        env:
+          # Clave "anon": pública por diseño, ya va en el bundle de truvik.es/crm
+          ANON: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwcWNkbmt4d2drY3lkenhyZmFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5NzMzMjksImV4cCI6MjA5ODU0OTMyOX0.f-B-7H4tc3pvVfoa9K5PupaoYT3gjp9SZ9a2tmPZ3l4
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' -m 30 -X POST \
+            'https://ipqcdnkxwgkcydzxrfaq.supabase.co/rest/v1/rpc/crm_get' \
+            -H 'Content-Type: application/json' \
+            -H "apikey: $ANON" -H "Authorization: Bearer $ANON" \
+            -d '{"p_id":"0000000000000000000000000000000000000000000000000000000000000000"}')
+          echo "Supabase respondió HTTP $code"
+          test "$code" = '200'
+
+      - name: Checkout de la rama keepalive
+        uses: actions/checkout@v4
+        with:
+          ref: keepalive
+
+      - name: Anotar el ping (mantiene activo el cron de GitHub)
+        run: |
+          date -u '+%Y-%m-%d %H:%M UTC' > ultimo-ping-supabase.txt
+          git config user.name 'keepalive-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add ultimo-ping-supabase.txt
+          git commit -m 'ping supabase'
+          git push
