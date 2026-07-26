@@ -303,7 +303,7 @@
     .stat-lbl { font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.4); margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }
 
     /* ── SECTION BASE ── */
-    section { padding: 110px 5vw; }
+    section { padding: 110px 5vw; overflow-x: clip; }
     .section-label {
       font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px;
       margin-bottom: 1rem; opacity: 0; animation: fadeInUp 0.6s ease-out 0.1s forwards;
@@ -334,6 +334,17 @@
     }
     .foto-mini:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
     .foto-mini:active { transform: translateY(-2px) scale(1); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
+    /* GALERÍA COLAPSABLE (ver todas / ver menos — mismo botón pill) */
+    .gallery-row.collapsed .foto-mini:nth-child(n+5) { display: none; }
+    .gallery-toggle {
+      display: block; margin: 1.8rem auto 0; padding: 0.78rem 1.7rem; border-radius: 999px;
+      border: 1.5px solid #E5E7EB; background: var(--white); color: var(--gray);
+      font-family: inherit; font-weight: 700; font-size: 0.9rem; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    .gallery-toggle:hover { transform: translateY(-3px); border-color: var(--blue); color: var(--blue); box-shadow: 0 12px 30px rgba(14,165,233,0.15); }
+    .gallery-toggle:active { transform: translateY(0) scale(0.97); }
     /* LIGHTBOX (foto completa al hacer click) */
     .lightbox { position: fixed; inset: 0; z-index: 1300; display: flex; align-items: center; justify-content: center; padding: 22px; background: rgba(8,12,18,0.92); backdrop-filter: blur(6px); opacity: 0; visibility: hidden; transition: opacity 0.35s, visibility 0.35s; }
     .lightbox.open { opacity: 1; visibility: visible; }
@@ -573,7 +584,7 @@
     .form-card > p { font-size: 0.87rem; color: var(--gray); margin-bottom: 1.8rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .fg { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.1rem; }
-    .fg label { font-size: 0.78rem; font-weight: 700; color: var(--gray); }
+    .fg label { font-size: 0.72rem; font-weight: 700; color: var(--gray-mid); text-transform: uppercase; letter-spacing: 0.05em; }
     .fg:has(input:required) label::after, .fg:has(select:required) label::after { content: ' *'; color: var(--blue); }
     .fg input, .fg select, .fg textarea {
       width: 100%; padding: 0.8rem 1rem; border: 1.5px solid #E5E7EB; border-radius: 10px;
@@ -594,15 +605,28 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%230EA5E9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 0.9rem center;
     }
+    /* icono guía dentro de los campos de texto */
+    .input-wrap { position: relative; display: block; }
+    .input-wrap .in-ico {
+      position: absolute; left: 0.95rem; top: 50%; transform: translateY(-50%);
+      width: 18px; height: 18px; color: #9CA3AF; pointer-events: none;
+      transition: color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .input-wrap input { padding-left: 2.7rem; }
+    .input-wrap:hover .in-ico { color: var(--gray-mid); }
+    .input-wrap:focus-within .in-ico { color: var(--blue); }
     .service-toggle { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7rem; margin-bottom: 1rem; }
     .toggle-opt {
-      border: 2px solid #E5E7EB; border-radius: 10px; padding: 0.8rem;
-      display: flex; align-items: center; gap: 7px; cursor: pointer;
+      border: 2px solid #E5E7EB; border-radius: 12px; padding: 1rem 0.5rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+      cursor: pointer; text-align: center;
       font-size: 0.84rem; font-weight: 600; color: var(--gray);
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       background: var(--white); box-shadow: 0 2px 4px rgba(0,0,0,0.04);
       user-select: none; -webkit-user-select: none;
     }
+    .toggle-opt .to-ico { font-size: 1.7rem; line-height: 1; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .toggle-opt:has(input:checked) .to-ico { transform: scale(1.12); }
     .toggle-opt:hover { border-color: #D1D5DB; background: #FAFAFA; transform: translateY(-2px); }
     .toggle-opt:active { transform: scale(0.95); }
     .toggle-opt input { display: none; }
@@ -795,6 +819,7 @@
       .gallery-row { gap: 1rem; }
       .foto-mini { flex-basis: calc(33.333% - 0.667rem); height: 140px; transition: transform 0.3s ease-out; }
       .foto-mini:active { transform: scale(0.97); }
+      .gallery-row.collapsed .foto-mini:nth-child(n+3) { display: none; }
 
       .proceso-layout { grid-template-columns: 1fr; gap: 3rem; }
       .paso-item { transition: all 0.3s ease-out; }
@@ -829,7 +854,9 @@
       .stat-num { font-size: 1.9rem; letter-spacing: -1px; }
       .stat-lbl { font-size: 0.68rem; }
       .servicios-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .service-toggle { grid-template-columns: 1fr; gap: 0.5rem; }
+      .service-toggle { grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
+      .toggle-opt { padding: 0.85rem 0.35rem; font-size: 0.78rem; border-radius: 11px; }
+      .toggle-opt .to-ico { font-size: 1.5rem; }
       .anim-up  { transform: translateY(28px); }
       .anim-left  { transform: translateX(-28px); }
       .anim-right { transform: translateX(28px); }
@@ -1092,7 +1119,7 @@
 <section id="stats">
   <div class="stats-grid">
     <div class="stat-item anim-up d1"><div class="stat-num"><span class="counter" data-target="15">0</span><em>+</em></div><div class="stat-lbl" data-i18n="stat1">Años en Tenerife</div></div>
-    <div class="stat-item anim-up d2"><div class="stat-num"><span class="counter" data-target="200">0</span><em>+</em></div><div class="stat-lbl" data-i18n="stat2">Propiedades gestionadas</div></div>
+    <div class="stat-item anim-up d2"><div class="stat-num"><span class="counter" data-target="20">0</span><em>+</em></div><div class="stat-lbl" data-i18n="stat2">Propiedades gestionadas</div></div>
     <div class="stat-item anim-up d3"><div class="stat-num"><span class="counter" data-target="3">0</span></div><div class="stat-lbl" data-i18n="stat3">Servicios especializados</div></div>
     <div class="stat-item anim-up d4"><div class="stat-num"><span class="counter" data-target="24">0</span><em>h</em></div><div class="stat-lbl" data-i18n="stat4">Respuesta garantizada</div></div>
   </div>
@@ -1128,7 +1155,7 @@
     </div>
   </div>
   <div class="gallery-fotos anim-up d3">
-    <div class="gallery-row">
+    <div class="gallery-row collapsible">
       <img src="assets/piscina-1.jpg" alt="Piscina mantenida" class="foto-mini" loading="lazy" />
       <img src="assets/piscina-2.jpg" alt="Limpieza de piscina" class="foto-mini" loading="lazy" />
       <img src="assets/piscina-3.jpg" alt="Piscina en Tenerife" class="foto-mini" loading="lazy" />
@@ -1167,7 +1194,7 @@
       </div>
     </div>
     <div class="gallery-fotos anim-up d2" style="margin-top:2.5rem;">
-      <div class="gallery-row">
+      <div class="gallery-row collapsible">
         <img src="assets/instalacion-1.jpg" alt="Instalación" class="foto-mini" loading="lazy" />
         <img src="assets/instalacion-2.jpg" alt="Reforma" class="foto-mini" loading="lazy" />
         <img src="assets/instalacion-3.jpg" alt="Obra" class="foto-mini" loading="lazy" />
@@ -1175,6 +1202,12 @@
         <img src="assets/obra-2.jpg" alt="Instalación de agua y riego automático" class="foto-mini" loading="lazy" />
         <img src="assets/obra-3.jpg" alt="Pequeña obra: instalación exterior" class="foto-mini" loading="lazy" />
         <img src="assets/obra-4.jpg" alt="Instalación de fontanería" class="foto-mini" loading="lazy" />
+        <img src="assets/instalacion-4.jpg" alt="Instalación hidráulica de piscina: tuberías y válvulas" class="foto-mini" loading="lazy" />
+        <img src="assets/instalacion-5.jpg" alt="Sala de máquinas de piscina: bomba y filtro" class="foto-mini" loading="lazy" />
+        <img src="assets/obra-5.jpg" alt="Reforma de borde de terraza (antes)" class="foto-mini" loading="lazy" />
+        <img src="assets/obra-6.jpg" alt="Reforma de borde de terraza (después)" class="foto-mini" loading="lazy" />
+        <img src="assets/obra-7.jpg" alt="Alicatado de escalera con revestimiento de piedra" class="foto-mini" loading="lazy" />
+        <img src="assets/obra-8.jpg" alt="Revestimiento de piedra en esquina exterior" class="foto-mini" loading="lazy" />
       </div>
     </div>
   </div>
@@ -1279,17 +1312,17 @@
         <input type="hidden" name="_cc" value="" />
 
         <div class="form-row">
-          <div class="fg"><label data-i18n="f-name">Nombre</label><input type="text" name="nombre" data-i18n-ph="ph-name" placeholder="Tu nombre" required /></div>
-          <div class="fg"><label data-i18n="f-phone">Teléfono</label><input type="tel" name="telefono" data-i18n-ph="ph-phone" placeholder="+34 6XX XXX XXX" required /></div>
+          <div class="fg"><label data-i18n="f-name">Nombre</label><div class="input-wrap"><svg class="in-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><input type="text" name="nombre" data-i18n-ph="ph-name" placeholder="Tu nombre" minlength="2" required /></div></div>
+          <div class="fg"><label data-i18n="f-phone">Teléfono</label><div class="input-wrap"><svg class="in-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><input type="tel" name="telefono" data-i18n-ph="ph-phone" placeholder="+34 6XX XXX XXX" inputmode="tel" maxlength="20" pattern="(?=(?:\D*\d){9,15})[\d\s+\-\(\)\.]{9,20}" title="Introduce un teléfono válido (mínimo 9 dígitos)." required /></div></div>
         </div>
-        <div class="fg"><label data-i18n="f-email">Email</label><input type="email" name="email" data-i18n-ph="ph-email" placeholder="tu@email.com" required /></div>
-        <div class="fg"><label data-i18n="f-zone">Zona / Municipio</label><input type="text" name="zona" data-i18n-ph="ph-zone" placeholder="Puerto de la Cruz, Adeje..." required /></div>
+        <div class="fg"><label data-i18n="f-email">Email</label><div class="input-wrap"><svg class="in-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg><input type="email" name="email" data-i18n-ph="ph-email" placeholder="tu@email.com" required /></div></div>
+        <div class="fg"><label data-i18n="f-zone">Zona / Municipio</label><div class="input-wrap"><svg class="in-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><input type="text" name="zona" data-i18n-ph="ph-zone" placeholder="Puerto de la Cruz, Adeje..." minlength="2" required /></div></div>
         <div class="fg">
           <label data-i18n="f-service">¿Qué servicio necesitas?</label>
           <div class="service-toggle">
-            <label class="toggle-opt"><input type="checkbox" name="servicios" value="Piscina"/>🏊 <span data-i18n="tog-pool">Piscina</span></label>
-            <label class="toggle-opt green-opt"><input type="checkbox" name="servicios" value="Jardín"/>🌿 <span data-i18n="tog-garden">Jardín</span></label>
-            <label class="toggle-opt obras-opt"><input type="checkbox" name="servicios" value="Obras e Instalaciones"/>🔨 <span data-i18n="tog-obras">Obras</span></label>
+            <label class="toggle-opt"><input type="checkbox" name="servicios" value="Piscina"/><span class="to-ico">🏊</span><span data-i18n="tog-pool">Piscina</span></label>
+            <label class="toggle-opt green-opt"><input type="checkbox" name="servicios" value="Jardín"/><span class="to-ico">🌿</span><span data-i18n="tog-garden">Jardín</span></label>
+            <label class="toggle-opt obras-opt"><input type="checkbox" name="servicios" value="Obras e Instalaciones"/><span class="to-ico">🔨</span><span data-i18n="tog-obras">Obras</span></label>
           </div>
         </div>
         <div class="fg">
@@ -1804,6 +1837,58 @@ document.getElementById('quote-form').addEventListener('submit', async function(
     btn.disabled=false; btn.style.opacity='1'; arrow.style.display='block'; spin.style.display='none';
   }
 });
+
+/* Mensaje de validación del teléfono en el idioma activo */
+(function(){
+  var phone = document.querySelector('#quote-form input[name="telefono"]');
+  if(!phone) return;
+  var MSG = {
+    es: 'Introduce un número de teléfono válido (mínimo 9 dígitos).',
+    en: 'Please enter a valid phone number (at least 9 digits).',
+    de: 'Bitte eine gültige Telefonnummer eingeben (mindestens 9 Ziffern).'
+  };
+  function msg(){ return MSG[document.documentElement.lang] || MSG.es; }
+  phone.addEventListener('invalid', function(){ phone.setCustomValidity(msg()); });
+  phone.addEventListener('input', function(){ phone.setCustomValidity(''); });
+})();
+</script>
+
+<!-- GALERÍA COLAPSABLE: "ver todas las fotos" -->
+<script>
+(function(){
+  var LBL = {
+    es: { all: function(n){ return 'Ver las ' + n + ' fotos'; }, less: 'Ver menos' },
+    en: { all: function(n){ return 'View all ' + n + ' photos'; }, less: 'Show less' },
+    de: { all: function(n){ return 'Alle ' + n + ' Fotos ansehen'; }, less: 'Weniger anzeigen' }
+  };
+  function curLang(){ var l = document.documentElement.lang; return LBL[l] ? l : 'es'; }
+  var groups = [];
+  document.querySelectorAll('.gallery-row.collapsible').forEach(function(row){
+    var fotos = row.querySelectorAll('.foto-mini');
+    if(fotos.length <= 4) return;
+    row.classList.add('collapsed');
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'gallery-toggle';
+    row.parentNode.appendChild(btn);
+    var g = { row: row, btn: btn, n: fotos.length };
+    groups.push(g);
+    btn.addEventListener('click', function(){
+      var wasCollapsed = g.row.classList.contains('collapsed');
+      g.row.classList.toggle('collapsed', !wasCollapsed);
+      label(g);
+      if(!wasCollapsed) g.row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+    label(g);
+  });
+  function label(g){
+    var l = curLang();
+    g.btn.textContent = g.row.classList.contains('collapsed') ? LBL[l].all(g.n) : LBL[l].less;
+  }
+  ['es','en','de'].forEach(function(l){
+    var b = document.getElementById('btn-' + l);
+    if(b) b.addEventListener('click', function(){ requestAnimationFrame(function(){ groups.forEach(label); }); });
+  });
+})();
 </script>
 
 <!-- LIGHTBOX GALERÍA -->
